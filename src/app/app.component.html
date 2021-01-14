@@ -1,0 +1,46 @@
+<div style="width:100%; overflow-x: hidden; margin-bottom: 90px;">
+	<div class="dropdown">
+		<h1 style="padding: 10px;">
+			<hello name="{{ name }}"></hello>
+			<button class="btn btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <b>Select version player bar</b>
+  </button>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" (click)="changeMode(1)">1.0</a>
+				<a class="dropdown-item" (click)="changeMode(2)">2.0</a>
+				<a class="dropdown-item" (click)="changeMode(0)">Lasted version</a>
+			</div>
+			<a style="font-size: 16px; margin-left: 15px;">by WHIZENx</a>
+		</h1>
+	</div>
+	<hr />
+	<div *ngIf="onPlaying()" style="overflow: hidden;">
+		<div *ngFor="let item of song; index as i">
+			<div id="play{{i+1}}" style="width:92%; height:50px; margin:auto; margin-top: 20px;">
+				<div style="color:#edbb4c; display:inline-block; ">
+					<span style="color:black;">
+          <a class="1" style="font-size:20px">
+            <i
+              class="fas fa-play"
+              id="{{i+1}}"
+              style="cursor:pointer; color:#edbb4c; font-size:25px"
+              (click)="playAudio(item.music, item.nameSong, item.artist, item.image)"
+            ></i>
+            <a style="margin-left: 20px;">{{item.nameSong}}</a><br />
+            <h6 style="margin-left:45px">{{item.artist}}</h6>
+          </a>
+        </span>
+				</div>
+				<div id="vote{{i+1}}" style="float:right; font-size:25px; margin-top:6.5px; color:#edbb4c">
+					<i
+          style="cursor:pointer;"
+          class="far fa-heart"
+          id="v{{i+1}}"
+          (click)="addplaylist(item.music, item.nameSong, item.artist, item.image)"
+        ></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<router-outlet></router-outlet>
+</div>

@@ -1,0 +1,310 @@
+<div id="playlistbar" class="fixed-bottom" style="width:100%; height: 70%; color:white;">
+	<div class="overlay">
+		<div id="mobile" style="background-color: rgb(30,30,30); height: 100%;">
+			<div class="modal-header vertical-center-playlist-top"
+				style="background-color: rgb(30,30,30); color: white; min-height: 83px;">
+				<div id="mobile-less-fonts">
+					<a class="modal-title" style="font-size: 100%; display: block;"><i class="fas fa-compact-disc"></i>
+						เพลย์ลิสต์ของฉัน</a>
+					<a *ngIf="sServ.mode == 1" class="flashani"
+						style="color: #edbb4c; font-size:75%;">กำลังเล่นเพลงบนเพลย์ลิสต์</a>
+				</div>
+				<div class="row" style="margin-right: 0%;">
+					<i *ngIf="songlist.length > 0" style="color: black; margin-right: 15px;" class="row vertical-center-playlist-top">
+            <i id="container">
+              <i *ngIf="sServ.mode == 0" title="เล่นเพลย์ลิสต์" id="player_list" class="fas fa-play" style="cursor:pointer; font-size:20px;" (click)="playListAudio()"></i>
+					<i *ngIf="sServ.mode == 1 && this.sServ.audio.paused" title="เล่น" id="player_list" class="fas fa-play" style="cursor:pointer; font-size:20px;" (click)="playAudioButton()"></i>
+					<i *ngIf="sServ.mode == 1 && !this.sServ.audio.paused" title="หยุดชั่วคราว" id="player_list" class="fas fa-pause" style="cursor:pointer; font-size:20px;" (click)="pauseAudio()"></i>
+					</i>
+					<div id="container2" style="margin-left: 8px; margin-right: 8px; width: 40px; height: 32px;"
+						(click)="randomSong()">
+						<i *ngIf="random" title="สุ่มเพลงเล่น" style="cursor: pointer; font-size:18px;" class="fas fa-random" ></i>
+						<i *ngIf="!random" title="เล่นเพลงต่อเนื่อง" style="cursor: pointer; font-size:18px;" class="fas fa-long-arrow-alt-right"></i>
+					</div>
+					<i title="บันทึกเพลย์ลิสต์" style="font-size: 36px; cursor: pointer;" class="fas fa-save text-success" (click)="savenow(songlist)"></i>
+					</i>
+					<i *ngIf="songlist.length > 0"class="vertical-center-playlist-top" style="color: white; cursor: pointer; font-size: 200%; margin-top: 3px;" (click)="hide_playlist()" class="fas fa-sort-down"></i>
+					<i *ngIf="songlist.length == 0" class="vertical-center-playlist-top" style="color: white; cursor: pointer; font-size: 200%;  margin-bottom: 12px;" (click)="hide_playlist()" class="fas fa-sort-down"></i>
+				</div>
+			</div>
+			<div class="modal-body" style="background-color: rgb(50,50,50); overflow-y: auto;">
+				<p *ngIf="songlist.length == 0"
+					style="margin-left: 5px; color: #edbb4c; padding: 10px; font-size: 20px;">
+					<b><i class="fas fa-music"></i> โปรดเพิ่มเพลงที่คุณชอบ</b></p>
+				<div *ngFor="let i of songlist;index as iid">
+					<div id="bg_list" style="padding: 5px; margin-bottom: 8px; border-radius: 5px;">
+						<i style="margin-right: 10px; cursor: pointer; color: orangered; font-size: 20px;" class="fas fa-times" (click)="deleteSong(i.src)"></i>
+						<img class="card-img" src="{{i.image}}" style="width:50px; height:50px;">
+						<span style="color: white;">
+              <a class="position-absolute" style="font-size:18px; width: 50%;">
+                <a style="display: block; margin-left:15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{i.name}}</a>
+                <small style="display: block; margin-left:12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{i.artist}}</small>
+              </a>
+            </span>
+						<a *ngIf="sServ.mode == 1 && i.src == songSrc"
+							style="float:right; color: #edbb4c; margin-top: 10px;"><b>กำลังเล่นเพลงนี้</b></a>
+						<a *ngIf="sServ.mode == 1 && i.src != songSrc"
+							style="float:right; color: #edbb4c; margin-top: 10px; margin-right: 10px;"><b><i class="fas fa-play" style="color:#edbb4c; cursor:pointer; margin-left:20px; font-size:20px; margin-top: 5px;" (click)="playSelectAudio(iid, i.src, i.name, i.artist, i.image)"></i></b></a>
+						<a *ngIf="sServ.mode == 0"
+							style="float:right; color: #edbb4c; margin-top: 10px; margin-right: 10px;"><b><i class="fas fa-play" style="color:#edbb4c; cursor:pointer; margin-left:20px; font-size:20px; margin-top: 5px;" (click)="playSelectAudio(iid, i.src, i.name, i.artist, i.image)"></i></b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="com" class="row" style="height:100%;">
+			<div class="col-5" style="width:100%; height: 100%;">
+				<div class="vertical-center-playlist" style="justify-content: center;">
+					<div class="image-preview" style="width: 90%; height: 90%;">
+						<div [style.backgroundImage]="'url('+ image +')'">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-7" style="height: 100%">
+				<div class="modal-header vertical-center-playlist-top"
+					style="background-color: rgb(30,30,30); color: white; width: 100%;">
+					<h5 style="font-size: 90%; width: 50%;" class="modal-title"><i class="fas fa-compact-disc"></i>
+						เพลย์ลิสต์ของฉัน<a *ngIf="sServ.mode == 1" class="flashani"
+							style="color: #edbb4c; margin-left:3%;">กำลังเล่นเพลงบนเพลย์ลิสต์</a></h5>
+					<div class="row" style="margin-right: 0%;">
+						<i *ngIf="songlist.length > 0" style="color: black; margin-right: 15px;" class="row">
+              <i id="container">
+                <i *ngIf="sServ.mode == 0" title="เล่นเพลย์ลิสต์" id="player_list" class="fas fa-play" style="cursor:pointer; font-size:20px;" (click)="playListAudio()"></i>
+						<i *ngIf="sServ.mode == 1 && this.sServ.audio.paused" title="เล่น" id="player_list" class="fas fa-play" style="cursor:pointer; font-size:20px;" (click)="playAudioButton()"></i>
+						<i *ngIf="sServ.mode == 1 && !this.sServ.audio.paused" title="หยุดชั่วคราว" id="player_list" class="fas fa-pause" style="cursor:pointer; font-size:20px;" (click)="pauseAudio()"></i>
+						</i>
+						<button class="active btn btn-outline-info" style="margin-left: 8px; margin-right: 8px; width: 50px;" (click)="randomSong()">
+                <i *ngIf="random" title="สุ่มเพลงเล่น" style="cursor: pointer; font-size:20px;" class="fas fa-random" ></i>
+                <i *ngIf="!random" title="เล่นเพลงต่อเนื่อง" style="cursor: pointer; font-size:20px;" class="fas fa-long-arrow-alt-right"></i>
+              </button>
+						<button type="button" class="btn btn-success" (click)="savenow(songlist)">
+                <span>บันทึกเพลย์ลิสต์</span>
+              </button>
+						</i>
+						<i *ngIf="songlist.length > 0" style="color: white; cursor: pointer; font-size: 30px; margin-top: 5px;" (click)="hide_playlist()" class="fas fa-sort-down"></i>
+						<i *ngIf="songlist.length == 0" style="color: white; cursor: pointer; font-size: 30px; margin-bottom: 12px;" (click)="hide_playlist()" class="fas fa-sort-down"></i>
+					</div>
+				</div>
+				<div class="modal-body"
+					style="background-color: rgb(50,50,50); height: calc(100% - 70px); overflow-y: auto;">
+					<a *ngIf="songlist.length == 0"
+						style="margin-left: 5px; color: #edbb4c; padding: 10px; font-size: 20px;"><b><i class="fas fa-music"></i> โปรดเพิ่มเพลงที่คุณชอบ</b></a>
+					<div *ngFor="let i of songlist;index as iid">
+						<div id="bg_list" style="padding: 5px; margin-bottom: 8px; border-radius: 5px;">
+							<i style="margin-right: 10px; cursor: pointer; color: orangered; font-size: 20px;" class="fas fa-times" (click)="deleteSong(i.src)"></i>
+							<img class="card-img" src="{{i.image}}" style="width:50px; height:50px;">
+							<span style="color: white;">
+                <a class="position-absolute" style="font-size:18px; width: 50%;">
+                  <a style="display: block; margin-left:15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{i.name}}</a>
+                  <small style="display: block; margin-left:12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{i.artist}}</small>
+                </a>
+              </span>
+							<a *ngIf="sServ.mode == 1 && i.src == songSrc"
+								style="float:right; color: #edbb4c; margin-top: 10px;"><b>กำลังเล่นเพลงนี้</b></a>
+							<a *ngIf="sServ.mode == 1 && i.src != songSrc"
+								style="float:right; color: #edbb4c; margin-top: 10px; margin-right: 10px;"><b><i class="fas fa-play" style="color:#edbb4c; cursor:pointer; margin-left:20px; font-size:20px; margin-top: 5px;" (click)="playSelectAudio(iid, i.src, i.name, i.artist, i.image)"></i></b></a>
+							<a *ngIf="sServ.mode == 0"
+								style="float:right; color: #edbb4c; margin-top: 10px; margin-right: 10px;"><b><i class="fas fa-play" style="color:#edbb4c; cursor:pointer; margin-left:20px; font-size:20px; margin-top: 5px;" (click)="playSelectAudio(iid, i.src, i.name, i.artist, i.image)"></i></b></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="fixed-bottom bg-position" style="width:100%; color:white; z-index: 1060;" *ngIf="onPlaying()">
+	<div id="play-bar" style="width: 100%; height: 100%;" (mouseup)="open_hide_playlist($event)">
+		<span class="popuptext">{{text_script}}</span>
+		<span class="popuptime">{{time_selected}}</span>
+		<span class="popuptime_extra">{{time_selected}}</span>
+		<div class="detailtext"
+			style="height: 100px; background-color: rgb(40, 40, 40); padding: 10px; border-radius: 6px;">
+			<div class="row detailtext-row" style="position: relative; padding-left: 10px; padding-right: 15px;">
+				<div class="detailtext-img" style="width: 25%; padding-right: 0;" align="center">
+					<img src="{{image}}" style="width: 80px; height: 80px" class="detailtext-img-inner card-img" alt="...">
+        </div>
+					<div class="detailtext-text" style="font-size: 18px; width: 65%; margin-top: 9px;">
+						<p class="detailtext-text-name"
+							style="width: 95%; margin-bottom: 6px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+							เพลง: {{songName}}</p>
+						<p class="detailtext-text-artist"
+							style="width: 95%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">ศิลปิน:
+							{{artist}}</p>
+					</div>
+					<div class="detailtext-love" style="display: flex; align-items: center; width: 5%;">
+						<i id="lover-md" style="color:#edbb4c; font-size: 200%; cursor: pointer;" class="detailtext-love-inner fa-heart" (click)="addplaylist(songSrc, songName, artist, image)"></i>
+					</div>
+				</div>
+			</div>
+			<div class="detailtext-less"
+				style="height: 80px; background-color: rgb(40, 40, 40); padding: 0px 10px 10px 10px; border-radius: 6px; width: 80%;">
+				<div class="row detailtext-less-row"
+					style="position: relative; padding-left: 10px; padding-right: 15px;">
+					<div class="detailtext-less-img" style="width: 25%; padding-right: 0; padding-top: 10px;"
+						align="center">
+						<img src="{{image}}" style="width: 60px; height: 60px" class="detailtext-less-img-inner card-img" alt="...">
+        </div>
+						<div class="detailtext-less-text"
+							style="font-size: 15px; width: 65%; padding-top: 10px; margin-left: 1%; margin-top: 4px;">
+							<p class="detailtext-less-text-name"
+								style="width: 95%; margin-bottom: 6px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+								เพลง: {{songName}}</p>
+							<p class="detailtext-less-text-artist"
+								style="width: 95%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+								ศิลปิน: {{artist}}</p>
+						</div>
+						<div class="detailtext-less-love" style="display: flex; align-items: center; width: 5%;">
+							<i id="lover-s" style="color:#edbb4c; font-size: 175%; cursor: pointer;" class="detailtext-less-love-inner fa-heart" (click)="addplaylist(songSrc, songName, artist, image)"></i>
+						</div>
+					</div>
+				</div>
+				<div id="com" style="position: absolute; width: 100%; bottom: 125%; z-index: 1080; height: 0;"
+					class="play_bar_mobile">
+					<input type="range" min="0" max="100" value="0" class="slider_play" id="myRangeplayer" (mousedown)="disableAuto($event)" (mouseup)="setTime($event)" onkeydown="return false;" (mouseover)="show_duraion($event)" (mouseleave)="hide_duraion($event)" (mousemove)="set_duraion($event)">
+    </div>
+					<div id="mobile" style="position: absolute; width: 100%; bottom: 125%; z-index: 1080; height: 0;"
+						class="play_bar_mobile">
+						<input *ngIf="mobile" type="range" min="0" max="100" value="0" class="slider_play" id="myRangeplayer" (touchstart)="disableAuto_mobile($event)" (touchend)="setTime_mobile($event)" (touchmove)="moveTime_mobile($event)">
+						<input *ngIf="!mobile" type="range" min="0" max="100" value="0" class="slider_play" id="myRangeplayer" (mousedown)="disableAuto($event)" (mouseup)="setTime($event)" onkeydown="return false;" (mouseover)="show_duraion($event)" (mouseleave)="hide_duraion($event)" (mousemove)="set_duraion($event)">
+    </div>
+						<div style="position: absolute; bottom: 25%; z-index: 1070;" class="less_options"
+							(mouseleave)="hideLessOption($event)">
+							<div style="background-color: #222; width: 100%; padding: 5px; border-radius: 6px;"
+								class="bg_less_options">
+								<input style="width: 70%; height: 10px;" type="range" min="0" max="100" value="50" class="slider" id="myRange">
+								<i *ngIf="sServ.mode == 0" style="margin-left: 10px; cursor: pointer;">
+          <i *ngIf="!repeat" style="color: rgba(255,255,255,0.3)" class="fas fa-redo-alt" (click)="repeatSong()"></i>
+								<i *ngIf="repeat" title="เล่นเพลงซ้ำ" class="fas fa-redo-alt" (click)="repeatSong()"></i>
+								</i>
+								<i *ngIf="sServ.mode == 1" style="margin-left: 10px; cursor: pointer;">
+          <i *ngIf="!repeat" style="color: rgba(255,255,255,0.3)" class="fas fa-sync-alt" (click)="repeatSong()"></i>
+								<i *ngIf="repeat" title="เล่นซ้ำทั้งหมด" class="fas fa-sync-alt" (click)="repeatSong()"></i>
+								</i>
+								<i *ngIf="sServ.mode == 0" style="color: rgba(255,255,255,0.3); margin-left: 10px; cursor: pointer;">
+          <i *ngIf="random" style="font-size: 87.5%;" class="fas fa-random" (click)="randomSong()"></i>
+								<i *ngIf="!random" class="fas fa-long-arrow-alt-right" (click)="randomSong()"></i>
+								</i>
+								<i *ngIf="sServ.mode == 1" style="margin-left: 10px; cursor: pointer;">
+          <i *ngIf="random" style="font-size: 87.5%;" title="สุ่มเพลงเล่น" class="fas fa-random" (click)="randomSong()"></i>
+								<i *ngIf="!random" title="เล่นเพลงต่อเนื่อง" class="fas fa-long-arrow-alt-right" (click)="randomSong()"></i>
+								</i>
+							</div>
+						</div>
+						<div style="position: absolute; bottom: 180%; height: 100%;" class="bg_volume_bar">
+							<div class="volume_bar" id="volume_bar"
+								style="transform: rotate(-90deg); background-color: #222; height: 40px; padding: 5px; border-radius: 6px; width: 120%;">
+								<input style="width: 100%; height: 8px;" type="range" min="0" max="100" value="50" class="slider" id="myRange">
+      </div>
+							</div>
+							<div id="mobile" class="container-fluid mobile_bar">
+								<div class="row">
+									<div class="col-3">
+										<div class="vertical-center-mobile" style="justify-content: center;">
+											<i style="cursor: pointer; font-size: 100%;" title="เพลงก่อนหน้า" class="fas fa-step-backward" (click)="backward()"></i>
+											<i id="player" class="fas fa-play" style="color:#edbb4c; cursor:pointer; margin-left:15%; font-size:200%;" (click)="playAudio(songSrc, songName, artist, image)"></i>
+											<i style="margin-left:15%; cursor: pointer; font-size:100%;" title="เพลงต่อไป" class="fas fa-step-forward" (click)="forward()"></i>
+										</div>
+									</div>
+									<div class="col-6" style="padding : 0; padding-left: 7px;">
+										<div class="vertical-center-mobile" style="justify-content: center;">
+											<div style="width:50px; height:50px;">
+												<img src="{{image}}" style="width:50px; height:50px;" class="card-img" alt="...">
+            </div>
+												<div style="max-width: 80%; margin-left: 2%;">
+													<a style="font-size: 110%; font-weight: 500; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 8px;"
+														title="{{artist}} - {{songName}}">{{artist}} - {{songName}}</a>
+													<p style="font-size: 100%; margin-bottom: 8px;">{{time_start}} /
+														{{time_finish}}</p>
+												</div>
+											</div>
+										</div>
+										<div id="mobile-less-options" class="col-3" style="padding-left: 7px;">
+											<div class="vertical-center-mobile" style="justify-content: flex-end;">
+												<i *ngIf="image != 'https://firebasestorage.googleapis.com/v0/b/websong-66c3d.appspot.com/o/songlogo.jpg?alt=media&token=40247c58-de1c-4a92-9c73-5b280f8d85c8'" id="option" style="color: white; cursor:pointer;" title="ข้อมูลเพลง" class="fas fa-ellipsis-v" (click)="showOptions()"></i>
+												<i style="width: 100%;" align="center">
+              <i class="repeats" style="cursor: pointer; font-size:125%;">
+                <i *ngIf="sServ.mode == 0">
+                  <i *ngIf="!repeat" style="color: rgba(255,255,255,0.3)" class="fas fa-redo-alt" (click)="repeatSong()"></i>
+												<i *ngIf="repeat" title="เล่นเพลงซ้ำ" class="fas fa-redo-alt" (click)="repeatSong()"></i>
+												</i>
+												<i *ngIf="sServ.mode == 1">
+                  <i *ngIf="!repeat" style="color: rgba(255,255,255,0.3)" class="fas fa-sync-alt" (click)="repeatSong()"></i>
+												<i *ngIf="repeat" title="เล่นซ้ำทั้งหมด" class="fas fa-sync-alt" (click)="repeatSong()"></i>
+												</i>
+												</i>
+												<i class="randoms" style="cursor: pointer;">
+                <i *ngIf="sServ.mode == 0" style="color: rgba(255,255,255,0.3);">
+                  <i *ngIf="random" style="font-size:110%" class="fas fa-random" (click)="randomSong()"></i>
+												<i *ngIf="!random" style="font-size:125%" class="fas fa-long-arrow-alt-right" (click)="randomSong()"></i>
+												</i>
+												<i *ngIf="sServ.mode == 1">
+                  <i *ngIf="random" style="font-size:110%" title="สุ่มเพลงเล่น" class="fas fa-random" (click)="randomSong()"></i>
+												<i *ngIf="!random" style="font-size:125%" title="เล่นเพลงต่อเนื่อง" class="fas fa-long-arrow-alt-right" (click)="randomSong()"></i>
+												</i>
+												</i>
+												<i id="options" class="fas fa-caret-left" style="color: white; font-size: 125%; cursor: pointer; margin-left: 25%; justify-content: center;" (mouseenter)="showLessOption($event)"></i>
+												<i id="volume" class="fas fa-volume-up" style="color:#edbb4c; font-size: 125%; cursor: pointer; margin-left: 15%; width: 22.5px;" (click)="showVolume()"></i>
+												</i>
+												<i id="content" style="color: white; cursor: pointer; font-size: 150%; margin-top: 11px;" class="fas fa-sort-up"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="com" class="container-fluid">
+									<div class="row">
+										<div class="col-2">
+											<div class="vertical-center" style="justify-content: center;">
+												<i style="cursor: pointer; font-size: 100%;" title="เพลงก่อนหน้า" class="fas fa-step-backward" (click)="backward()"></i>
+												<i id="player" class="fas fa-play" style="color:#edbb4c; cursor:pointer; margin-left:8%; font-size:200%;" (click)="playAudio(songSrc, songName, artist, image)"></i>
+												<i style="margin-left:8%; cursor: pointer; font-size:100%;" title="เพลงต่อไป" class="fas fa-step-forward" (click)="forward()"></i>
+											</div>
+										</div>
+										<div class="col-6" style="padding: 0; padding-left: 5px;">
+											<div class="vertical-center" style="justify-content: center;">
+												<div style="width:50px; height:50px;">
+													<img src="{{image}}" style="width:50px; height:50px;" class="card-img" alt="...">
+            </div>
+													<div style="max-width: 100%; margin-left: 2%;">
+														<a style="font-size: 110%; font-weight: 500; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 8px;"
+															title="{{artist}} - {{songName}}">{{artist}} -
+															{{songName}}</a>
+														<p style="font-size: 100%; margin-bottom: 8px;">{{time_start}} /
+															{{time_finish}}</p>
+													</div>
+												</div>
+											</div>
+											<div id="mobile-less-options" class="col-4" style="padding-left: 7px;">
+												<div class="vertical-center" style="justify-content: flex-end;">
+													<i *ngIf="image != 'https://firebasestorage.googleapis.com/v0/b/websong-66c3d.appspot.com/o/songlogo.jpg?alt=media&token=40247c58-de1c-4a92-9c73-5b280f8d85c8'" id="option" style="color: white; cursor:pointer;" title="ข้อมูลเพลง" class="fas fa-ellipsis-v" (click)="showOptions()"></i>
+													<i style="width: 30%;" align="center">
+              <i class="repeats" style="cursor: pointer; font-size:125%;">
+                <i *ngIf="sServ.mode == 0">
+                  <i *ngIf="!repeat" style="color: rgba(255,255,255,0.3)" class="fas fa-redo-alt" (click)="repeatSong()"></i>
+													<i *ngIf="repeat" title="เล่นเพลงซ้ำ" class="fas fa-redo-alt" (click)="repeatSong()"></i>
+													</i>
+													<i *ngIf="sServ.mode == 1">
+                  <i *ngIf="!repeat" style="color: rgba(255,255,255,0.3)" class="fas fa-sync-alt" (click)="repeatSong()"></i>
+													<i *ngIf="repeat" title="เล่นซ้ำทั้งหมด" class="fas fa-sync-alt" (click)="repeatSong()"></i>
+													</i>
+													</i>
+													<i class="randoms" style="cursor: pointer; margin-left: 25%">
+                <i *ngIf="sServ.mode == 0" style="color: rgba(255,255,255,0.3);">
+                  <i *ngIf="random" style="font-size:110%" class="fas fa-random" (click)="randomSong()"></i>
+													<i *ngIf="!random" style="font-size:125%" class="fas fa-long-arrow-alt-right" (click)="randomSong()"></i>
+													</i>
+													<i *ngIf="sServ.mode == 1">
+                  <i *ngIf="random" style="font-size:110%" title="สุ่มเพลงเล่น" class="fas fa-random" (click)="randomSong()"></i>
+													<i *ngIf="!random" style="font-size:125%" title="เล่นเพลงต่อเนื่อง" class="fas fa-long-arrow-alt-right" (click)="randomSong()"></i>
+													</i>
+													</i>
+													</i>
+													<i id="volume" class="fas fa-volume-up" style="color:#edbb4c; font-size: 125%; cursor: pointer; margin-left: 1%;" (click)="checkVolume($event)"></i>
+													<input style="margin-left: 2%; width: 45%;" type="range" min="0" max="100" value="50" class="slider" id="myRange">
+													<i id="content" style="margin-left: 5%; color: white; cursor: pointer; font-size: 150%; margin-top: 12px;" class="fas fa-sort-up"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
