@@ -1671,10 +1671,6 @@ export class PlaybarComponent implements OnInit {
         "height",
         "" + Math.round(win_height / 20) * (win_height / 1000) + "px"
       );
-      $(".slider_play_info::-webkit-slider-thumb").css(
-        "width",
-        "" + Math.round(tri_inch / 20) + "px"
-      );
       $(".popuptime_info").css(
         "font-size",
         "" + Math.round(tri_inch / 40) + "px"
