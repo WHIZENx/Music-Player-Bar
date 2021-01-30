@@ -1622,40 +1622,40 @@ export class PlaybarComponent implements OnInit {
       let win_width = window.innerWidth;
       let win_height = window.innerHeight;
       let tri_inch = (win_width ** 2 + win_height ** 2) ** 0.5;
-      $("#name-info").css("font-size", "" + Math.round(tri_inch / 27) + "px");
-      $("#down-info").css("font-size", "" + Math.round(tri_inch / 37) + "px");
+      $("#name-info").css("font-size", Math.round(tri_inch / 27) + "px");
+      $("#down-info").css("font-size", Math.round(tri_inch / 37) + "px");
       $("#artist-info").css(
         "font-size",
-        "" + (Math.round(tri_inch / 30) - 8) + "px"
+        (Math.round(tri_inch / 30) - 8) + "px"
       );
       $("#time-start-info").css(
         "font-size",
-        "" + (Math.round(tri_inch / 30) - 8) + "px"
+        (Math.round(tri_inch / 30) - 8) + "px"
       );
       $("#time-finish-info").css(
         "font-size",
-        "" + (Math.round(tri_inch / 30) - 8) + "px"
+        (Math.round(tri_inch / 30) - 8) + "px"
       );
       $("#backward-info").css(
         "font-size",
-        "" + Math.round(tri_inch / 45) + "px"
+        Math.round(tri_inch / 45) + "px"
       );
       $("#player_info_bar").css(
         "font-size",
-        "" + Math.round(tri_inch / 20) + "px"
+        Math.round(tri_inch / 20) + "px"
       );
       $("#forward-info").css(
         "font-size",
-        "" + Math.round(tri_inch / 45) + "px"
+        Math.round(tri_inch / 45) + "px"
       );
       $("#playlist-logo1").css(
         "font-size",
-        "" + Math.round(tri_inch / 28) + "px"
+        Math.round(tri_inch / 28) + "px"
       );
-      $("#lover-info").css("font-size", "" + Math.round(tri_inch / 28) + "px");
+      $("#lover-info").css("font-size", Math.round(tri_inch / 28) + "px");
       $("#playlist-logo2").css(
         "font-size",
-        "" + (Math.round(tri_inch / 28) - 10) + "px"
+        (Math.round(tri_inch / 28) - 10) + "px"
       );
       $("#playlist-logo2").offset({
         left:
@@ -1669,11 +1669,11 @@ export class PlaybarComponent implements OnInit {
       });
       $("#playbar-info").css(
         "height",
-        "" + Math.round(win_height / 20) * (win_height / 1000) + "px"
+        Math.round(win_height / 20) * (win_height / 1000) + "px"
       );
       $(".popuptime_info").css(
         "font-size",
-        "" + Math.round(tri_inch / 40) + "px"
+        Math.round(tri_inch / 40) + "px"
       );
     }
 
