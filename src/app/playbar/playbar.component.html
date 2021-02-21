@@ -654,7 +654,7 @@
         />
       </div>
 							</div>
-							<div id="playrange" style="height: 20px;">
+							<div id="playrange" style="height: 20px; display: flex;">
 								<input
         type="range"
         min="0"
@@ -663,6 +663,7 @@
         step="0.001"
         class="slider_play"
         id="myRangeplayer"
+        style="align-self: flex-end; display: inline-block; margin-bottom: 2px;"
         (mousedown)="disableAuto($event)"
         (mouseup)="setTime($event)"
         onkeydown="return false;"
