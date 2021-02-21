@@ -1339,9 +1339,9 @@ export class PlaybarComponent implements OnInit {
       if (
         this.image ==
         "https://firebasestorage.googleapis.com/v0/b/websong-66c3d.appspot.com/o/songlogo.jpg?alt=media&token=40247c58-de1c-4a92-9c73-5b280f8d85c8"
-      ) {
+      )
         $("#option-bg").hide();
-      } else $("#option-bg").show();
+      else $("#option-bg").show();
       $("#right-option").css("justify-content", "flex-end");
       $(".playerbar-mobile").hide();
       $(".modal-body").height($("#playlistbar").height() - 110);
