@@ -1,6 +1,6 @@
 # Music Player Bar
 
-## [View website 🎵](https://music-player-bar.stackblitz.io/)
+## [View website 🎵](https://music-player-bar.firebaseapp.com/)
 
 Example Interface and Fuctions for Music player bar
 
