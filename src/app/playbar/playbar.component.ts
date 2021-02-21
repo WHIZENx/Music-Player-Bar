@@ -373,6 +373,7 @@ export class PlaybarComponent implements OnInit {
   selected_bar = false;
 
   setTime(e) {
+    if (this.time_finish == "0:00") return false;
     let x = e.pageX;
     if (this.sServ.audio.src != "") {
       this.sServ.audio.currentTime =
@@ -385,6 +386,11 @@ export class PlaybarComponent implements OnInit {
   }
 
   disableAuto(e) {
+    if (this.time_finish == "0:00") {
+      this.show_hide_popup();
+      this.text_script = "กำลังโหลดเพลง...";
+      return false;
+    }
     if ($(".detailtext").is(":visible")) {
       $(".detailtext").hide();
       this.option_bar = false;
@@ -401,6 +407,7 @@ export class PlaybarComponent implements OnInit {
   }
 
   setTime_mobile(e) {
+    if (this.time_finish == "0:00") return false;
     if (this.sServ.audio.src != "") {
       this.sServ.audio.currentTime =
         (e.target.valueAsNumber / 100) * this.sServ.audio.duration;
@@ -412,6 +419,7 @@ export class PlaybarComponent implements OnInit {
   }
 
   moveTime_mobile(e) {
+    if (this.time_finish == "0:00") return false;
     let x = e.touches[0].pageX;
     if (this.mobile && window.innerHeight > window.innerWidth) {
       if (x <= $(".slider_play_info").offset().left)
@@ -451,6 +459,7 @@ export class PlaybarComponent implements OnInit {
   }
 
   disableAuto_mobile(e) {
+    
     if (this.sServ.p1) this.timeskip = true;
     if (this.sServ.audio.src != "") {
       this.block = true;
@@ -478,6 +487,7 @@ export class PlaybarComponent implements OnInit {
   }
 
   set_position_time(e, mobile = false) {
+    if (this.time_finish == "0:00") return false;
     if (!mobile) {
       e.offset({
         left:
@@ -529,6 +539,7 @@ export class PlaybarComponent implements OnInit {
   time_selected = "0:00";
 
   set_duraion(e) {
+    if (this.time_finish == "0:00") return false;
     if (!$(".popuptime").is(":visible")) {
       if (this.time_finish != "0:00") {
         $(".popuptime").show();
@@ -549,6 +560,7 @@ export class PlaybarComponent implements OnInit {
   }
 
   hide_duraion(e) {
+    if (this.time_finish == "0:00") return false;
     this.set_position_time($(".popuptime"));
     $(".popuptime").hide();
   }
