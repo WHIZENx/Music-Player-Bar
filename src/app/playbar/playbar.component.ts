@@ -1649,7 +1649,9 @@ export class PlaybarComponent implements OnInit {
       let win_height = window.innerHeight;
       let tri_inch = (win_width ** 2 + win_height ** 2) ** 0.5;
       $("#name-info").css("font-size", Math.round(tri_inch / 27) + "px");
+      $("#tab-down-info").css("height", Math.round(tri_inch / 19.5) + "px");
       $("#down-info").css("font-size", Math.round(tri_inch / 37) + "px");
+      $("#play-slider").css("height", Math.round(tri_inch / 26) + "px");
       $("#artist-info").css("font-size", Math.round(tri_inch / 30) - 8 + "px");
       $("#time-start-info").css(
         "font-size",
