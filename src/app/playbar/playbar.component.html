@@ -1,4 +1,4 @@
-<div id="infobar" class="fixed-bottom" style="width:100%; height: 100%; color:white;">
+<div id="infobar" class="fixed-bottom" style="width:100%; height: 100%;">
 	<div class="overlay-info" (touchstart)="save_position_ty($event)" (touchmove)="move_position_ty($event)"
 		(touchend)="check_position_ty($event)">
 		<span class="popup_playlist">{{text_info}}</span>
@@ -55,7 +55,8 @@
 					{{artist}}
 				</p>
 			</div>
-			<div id="play-slider" class="container-fluid" align="center" style="display:flex; justify-content: center; align-items: center;">
+			<div id="play-slider" class="container-fluid" align="center"
+				style="display:flex; justify-content: center; align-items: center;">
 				<input
         type="range"
         min="0"

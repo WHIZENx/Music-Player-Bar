@@ -1,3 +1,14 @@
 p {
   font-family: Lato;
 }
+
+span {
+  color: white;
+}
+
+hr {
+  height: 1px;
+  color: #aaa;
+  background-color: #aaa;
+  border: none;
+}

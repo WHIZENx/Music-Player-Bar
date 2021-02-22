@@ -1591,7 +1591,7 @@ export class PlaybarComponent implements OnInit {
           if (this.songlist[i].src == this.songSrc) {
             $("#love-bar").addClass("fas");
             $("#love-bar").removeClass("far");
-            $("#option-bg").attr("title", "ไม่ชอบ");
+            $("#option-bg").attr("title", "ชอบ");
             love = true;
             break;
           }
@@ -1607,7 +1607,7 @@ export class PlaybarComponent implements OnInit {
       if (!this.mobile) {
         $("#love-bar").addClass("far");
         $("#love-bar").removeClass("fas");
-        $("#option-bg").attr("title", "ชอบ");
+        $("#option-bg").attr("title", "ไม่ชอบ");
       }
     }
     if (this.sServ.audio.paused) {
