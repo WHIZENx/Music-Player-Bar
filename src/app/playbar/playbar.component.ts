@@ -359,6 +359,11 @@ export class PlaybarComponent implements OnInit {
           $(".popuptime_info").width() / 2 +
           29
       });
+    } else {
+      $(".less_options").offset({
+        top: $("#options").offset().top + ($("#options").height() * 2)
+      });
+
     }
     $(".popuptime_info").hide();
     $(".popup_playlist").hide();
